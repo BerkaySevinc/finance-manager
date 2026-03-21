@@ -1,6 +1,6 @@
-# Financial Freedom Calculator
+# Finance Manager
 
-**Financial Freedom Calculator** web application written in HTML, CSS, and JavaScript.
+**Finance Manager** web application written in HTML, CSS, and JavaScript.
 A clean and modern browser-based investment simulator for calculating compound growth, tracking portfolio allocation, and planning financial independence.
 </br>
 </br>
