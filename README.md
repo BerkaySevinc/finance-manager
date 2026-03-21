@@ -5,10 +5,7 @@ A clean and modern browser-based investment simulator for calculating compound g
 </br>
 </br>
 
-# Details
-- Written in HTML, CSS, and JavaScript.
-- No frameworks or build tools — runs directly in the browser.
-- The user interface is in **Turkish**.
+# Features
 - **Portfolio tab** displays asset allocation as interactive pie, bar, and donut charts.
 - **Projection tab** calculates and visualizes the investment growth timeline with an interactive line chart and a today marker.
 - **Saved Scenarios tab** stores multiple projection scenarios for side-by-side comparison, each with independent inflation mode settings.
@@ -17,6 +14,12 @@ A clean and modern browser-based investment simulator for calculating compound g
 - Supports **foreign exchange (FX) simulation** — calculates growth in a foreign currency with configurable exchange rate, annual rate increase, and foreign inflation.
 - Three target types: **principal target**, **income target**, and **time target**.
 - Each saved scenario shows a detailed modal with nominal values, real values, and **today's money** adjusted figures.
+</br>
+
+# Details
+- Written in HTML, CSS, and JavaScript.
+- No frameworks or build tools — runs directly in the browser.
+- The user interface is in **Turkish**.
 - Data is persisted locally in the browser via `localStorage`.
 - All external dependencies (Chart.js, chartjs-plugin-datalabels, chartjs-plugin-annotation, Inter font) are **bundled locally** — no internet connection required.
 - Uses **Chart.js** for all chart rendering.
@@ -29,4 +32,3 @@ A clean and modern browser-based investment simulator for calculating compound g
 ![Screenshot 4](Introduction%20Media/Screenshot%204.png)
 ![Screenshot 5](Introduction%20Media/Screenshot%205.png)
 ![Screenshot 6](Introduction%20Media/Screenshot%206.png)
-
