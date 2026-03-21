@@ -1,0 +1,2581 @@
+:root {
+  /* GitHub Dark & Fintech Modern Palette */
+  --bg-body: #0d1117;
+  --bg-card: #161b22;
+  --bg-input: #0d1117;
+  --border-color: #30363d;
+  --text-main: #c9d1d9;
+  --text-muted: #8b949e;
+  --accent-blue: #58a6ff;
+  --button-active: #1f6feb;
+  --accent-green: #238636;
+  --accent-hover: #2ea043;
+  --accent-green-bright: #32d48a;
+  --table-header-bg: #161b22;
+  --table-stripe: #1c2128;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-body);
+}
+
+
+/* --- GLOBAL SCROLLBAR DESIGN --- */
+/* These settings apply to both the main page (body) and the modal (#detail-modal) */
+
+/* Scrollbar Width */
+::-webkit-scrollbar {
+  width: 10px;
+  /* Vertical scrollbar width */
+  height: 10px;
+  /* Horizontal scrollbar height */
+}
+
+/* Scrollbar Track (Background) */
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+  border-radius: 4px;
+}
+
+/* Scrollbar Thumb (Handle) */
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  /* Grey border color from the theme */
+  border-radius: 5px;
+  /* Rounded edges */
+  border: 2px solid var(--bg-body);
+  /* Creates a spacing feel from the edges */
+}
+
+/* On thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
+  /* Becomes a slightly lighter grey */
+}
+
+
+
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  display: flex;
+  min-height: 100vh;
+
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE/Edge */
+  user-select: none;
+  /* Modern browsers */
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+
+  display: grid;
+  /* Top (1fr) - Middle (auto) - Bottom (1fr) */
+  /* This keeps the middle row (panel) always perfectly centered vertically */
+  grid-template-rows: 1fr auto 1fr;
+  gap: 2rem;
+
+
+  /* Animation duration and easing */
+  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+
+header {
+  text-align: center;
+  margin-bottom: 1rem;
+
+  transition: all 0.4s ease;
+  align-self: end;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+header p {
+  color: var(--text-muted);
+}
+
+/* --- Control Panel --- */
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  width: 100%;
+  max-width: 1200px;
+}
+
+
+
+@media (max-width: 768px) {
+  .control-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-group-wrapper {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group-wrapper h3 {
+  margin-bottom: 2.25rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--accent-blue);
+}
+
+.input-group-wrapper h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent-blue);
+  text-align: center;
+}
+
+.input-header {
+  margin-top: -0.25rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid color-mix(in srgb,
+      var(--border-color) 50%,
+      transparent);
+
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input-item label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.input-item input,
+.input-item select {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.75rem;
+  border-radius: 12px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: center;
+  height: 2.875rem;
+}
+
+.input-item input:focus,
+.input-item select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+
+
+
+/* --- Goal Toggle --- */
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.toggle-container {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.2rem;
+  display: flex;
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dynamic-inputs {
+  display: none;
+}
+
+.dynamic-inputs.active {
+  display: block;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.info-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  font-style: italic;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Results Table --- */
+.results-section {
+  background-color: var(--bg-card);
+  box-shadow: 0 0 0 1px var(--border-color);
+
+  border-radius: 24px;
+  overflow: hidden;
+
+  animation: slideFadeIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) both;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  font-variant-numeric: tabular-nums;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 35%;
+}
+
+/* =========================
+   TABLE CORE
+========================= */
+
+/* =========================
+   CELLS
+========================= */
+
+th,
+td {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  vertical-align: middle;
+
+  /* SHADOW INSTEAD OF BORDER */
+  border: none;
+  box-shadow: inset 0 -1px 0 var(--border-color);
+
+  /* GPU STABILITY */
+  background-clip: padding-box;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+th {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+
+  background-color: var(--table-header-bg);
+  color: var(--accent-blue);
+  font-weight: 600;
+
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* =========================
+   FIRST COLUMN (STICKY)
+========================= */
+
+td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 20;
+
+  font-weight: 600;
+  color: var(--accent-blue);
+  background-color: var(--bg-card);
+
+  /* RIGHT EDGE */
+  box-shadow:
+    inset -1px 0 0 var(--border-color),
+    inset 0 -1px 0 var(--border-color);
+
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* =========================
+   TOP-LEFT CELL (DOUBLE STICKY)
+========================= */
+
+th:first-child {
+  left: 0;
+  z-index: 40;
+
+  background-color: var(--bg-card);
+
+  box-shadow:
+    inset -1px 0 0 var(--border-color),
+    inset 0 -1px 0 var(--border-color);
+}
+
+/* =========================
+   CELL CONTENT
+========================= */
+
+.cell-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  min-height: 4rem;
+}
+
+th .cell-content {
+  min-height: 2.5rem;
+}
+
+
+
+
+
+/* Checkmark style and size */
+.checkmark {
+  color: var(--accent-green);
+  font-size: 1.8rem;
+  /* Larger size */
+  font-weight: bold;
+  line-height: 1;
+  display: block;
+}
+
+/* Sub-text area */
+.sub-value {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.highlight-main {
+  font-weight: 500;
+  display: block;
+}
+
+
+.p-val .checkmark {
+  font-size: 1.3125rem;
+}
+
+
+th:first-child .cell-content {
+  /* align-items: flex-start; */
+  /* Aligns to the left */
+}
+
+td:first-child .cell-content .highlight-main {
+  font-weight: 600;
+}
+
+/* General color for header cells */
+th .highlight-main,
+th .cell-content {
+  color: var(--accent-blue);
+  /* The blue variable you defined */
+  font-weight: 600;
+}
+
+/* Match the interest income period text (/ Month) color to the primary blue but make it slightly softer */
+th .highlight-main span {
+  color: var(--accent-blue);
+  opacity: 0.8;
+  font-size: 0.8em;
+  margin-left: 2px;
+  font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Segmented control body */
+.goal-selector {
+  background: var(--bg-input);
+  /* Your existing dark card color */
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  grid-template-columns: 1fr 1fr 1fr;
+  display: grid;
+  gap: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  width: 100%;
+}
+
+
+.selector-wrapper {
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+  margin: 0 auto;
+
+  margin-top: -1rem;
+  margin-bottom: 2.25rem;
+
+  width: calc(100% + 3rem + 2px);
+  margin-left: calc(-1.5rem - 1px);
+  margin-right: calc(-1.5rem - 1px);
+}
+
+
+.enf-selector {
+  background: var(--bg-input);
+  /* Your existing dark card color */
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  grid-template-columns: 1fr 1fr 1fr;
+  display: grid;
+  gap: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  width: 100%;
+}
+
+/* Hover effect */
+.toggle-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Active (Selected) Button - Modern Blue Effect */
+.toggle-btn.active {
+  background: var(--button-active);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+/* Small screen adaptation */
+@media (max-width: 480px) {
+  .goal-selector {
+    width: 100%;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    padding: 10px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+.switch-wrapper {
+  margin-bottom: -0.3rem;
+}
+
+/* --- Switch (Toggle) Checkbox --- */
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.switch-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.switch-container input {
+  display: none;
+}
+
+.switch-slider {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.switch-slider:before {
+  content: "";
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 2px;
+  background-color: var(--text-muted);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.switch-container input:checked+.switch-slider {
+  background-color: rgba(88, 166, 255, 0.2);
+  border-color: var(--accent-blue);
+}
+
+.switch-container input:checked+.switch-slider:before {
+  transform: translateX(16px);
+  background-color: var(--accent-blue);
+}
+
+
+
+
+
+
+
+/* --- Clickable Rows --- */
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr:hover {
+  background-color: var(--table-stripe);
+  /* Existing hover color */
+}
+
+/* Also change the color of the sticky first column */
+tbody tr:hover td:first-child {
+  background-color: var(--table-stripe);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- MODERN DETAIL MODAL --- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  overflow-y: auto;
+  padding: 0;
+}
+
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  width: 95%;
+  max-width: 1100px;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+
+  margin: 4rem auto;
+
+  flex-shrink: 0;
+  opacity: 0;
+
+  /* Prevents content from being squished */
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 0.7;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--text-main);
+}
+
+/* Modal Content Layout */
+.modal-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .modal-body-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Chart Area */
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.donut-chart-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-bottom: 1.5rem;
+}
+
+.donut-chart {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  /* Default color (until JS runs) */
+  background: conic-gradient(var(--accent-green-bright) 0% 50%, var(--accent-blue) 50% 100%);
+
+  /* Mask to cut out the center (Standard and Webkit combined) */
+  -webkit-mask: radial-gradient(transparent 62%, black 63%);
+  mask: radial-gradient(transparent 62%, black 63%);
+
+  transition: background 0.5s ease;
+  /* Smooth color transition */
+}
+
+.donut-chart-left {
+
+  transform: translateX(-30px);
+}
+
+
+
+.chart-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.chart-value {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Chart Color Legend */
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.p-dot {
+  background-color: var(--accent-green-bright);
+  background: var(--accent-blue);
+}
+
+.i-dot {
+  background-color: var(--accent-blue);
+  background: var(--accent-green-bright);
+}
+
+/* Data List Area */
+.details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.d-label {
+  color: var(--text-muted);
+}
+
+.d-value {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.d-value.large {
+  font-size: 1.5rem;
+}
+
+.highlight-blue {
+  color: var(--accent-blue);
+}
+
+.highlight-green {
+  color: var(--accent-green-bright);
+}
+
+.highlight-dark-green {
+  color: var(--accent-hover);
+}
+
+.highlight-red {
+  color: #da3633;
+}
+
+.highlight-purple {
+  color: #cd4eff;
+}
+
+.highlight-cyan {
+  color: #47daee;
+}
+
+.highlight-gold {
+  color: #ffd735;
+}
+
+.detail-separator {
+  height: 1px;
+  background: var(--border-color);
+  margin: 5px 0;
+}
+
+/* Bottom Highlight Box */
+.detail-box {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+
+
+
+
+.modal-body-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Top Parameter Bar */
+.summary-top-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--bg-input);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.input-top-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--bg-input);
+  border-radius: 12px;
+  padding-top: 1rem -1px -1px -1px;
+
+  border: 1px solid var(--border-color);
+  gap: 0.75rem;
+}
+
+/* Middle Parameter Bar */
+.metric-list .summary-top-bar {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.param-item {
+  text-align: center;
+}
+
+.p-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.p-val {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Dashboard Grid */
+.dashboard-main-grid-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dashboard-main-grid-today {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 0.5rem;
+  gap: 2rem;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.dashboard-card .horizontal-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.dashboard-card .horizontal-card-container .canvas-wrap {
+  flex-grow: 1;
+}
+
+
+.dashboard-card h3,
+.dashboard-card h4 {
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dashboard-card h4.chart-title {
+
+  text-align: center;
+
+  position: absolute;
+  top: 1.2rem;
+  /* Space from the top */
+  left: 50%;
+  /* Horizontal center point */
+  transform: translateX(-50%);
+  /* Pulls back by half its own width to perfectly center it */
+  margin: 0;
+  z-index: 10;
+  /* To sit above the canvas */
+  pointer-events: none;
+  /* Passes mouse events to the canvas (required for tooltip to work) */
+}
+
+/* Income Boxes (Grid) */
+.income-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.inc-box {
+  background: var(--bg-input);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.i-lbl {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.inc-box span:last-child {
+  font-weight: 600;
+  color: var(--accent-blue);
+  font-size: 0.95rem;
+}
+
+/* Yield Badge */
+.badge-yield {
+  background: rgba(35, 134, 54, 0.2);
+  color: var(--accent-green-bright);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Dashboard Card Layout */
+
+.chart-legend-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0.6rem;
+  position: absolute;
+  pointer-events: none;
+  right: 12px;
+  bottom: 12px;
+}
+
+.l-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.l-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.l-text-group small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.data-group {
+  margin-bottom: 2rem;
+}
+
+.data-group:last-child {
+  margin-bottom: 0;
+}
+
+.data-group h4 {
+  border-left: 3px solid var(--accent-blue);
+  padding-left: 10px;
+  margin-bottom: 1rem;
+}
+
+.d-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-icon {
+  font-style: normal;
+  font-size: 0.7rem;
+  cursor: help;
+  color: var(--text-muted);
+  vertical-align: middle;
+}
+
+canvas {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.canvas-wrap {
+  background: var(--bg-body);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.chart-center-text {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  width: max-content;
+  height: max-content;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% - 30px), -50%);
+
+  transition: opacity 0.3s ease;
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  background: var(--border-color);
+  margin: 12px 0;
+}
+
+.metric-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-state-text {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-style: italic;
+}
+
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238b949e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+
+
+
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6rem);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  99% {
+    opacity: 1;
+    transform: translateY(0.5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  1% {
+    opacity: 1;
+    transform: translateY(0.5px);
+    /* snap start */
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(6rem);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================
+   SIDEBAR
+============================ */
+
+.sidebar {
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.sidebar .tab-btn {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: none;
+  color: #aaa;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 500;
+}
+
+.sidebar .tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar .tab-btn.active {
+  background: var(--button-active);
+  color: #fff;
+}
+
+
+
+
+.tab-btn2 {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: none;
+  color: #aaa;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 500;
+}
+
+.tab-btn2:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tab-btn2.active {
+  background: var(--button-active);
+  color: #fff;
+}
+
+
+
+
+
+
+
+
+/* ============================
+   CONTENT
+============================ */
+
+.main-content {
+  padding: 4rem;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-content.grid.active {
+  display: grid;
+}
+
+
+
+
+.tab-content2 {
+  display: none;
+
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tab-content2.active {
+  display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- PORTFOLIO TAB STYLES --- */
+
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Input Area */
+.portfolio-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#asset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.asset-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: border-color 0.2s;
+}
+
+.asset-card:hover {
+  border-color: var(--text-muted);
+}
+
+.asset-card-header {
+  display: grid;
+  grid-template-columns: 40px 1.5fr 1fr 40px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Color Picker */
+.color-input-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  position: relative;
+}
+
+.color-input-wrapper input[type="color"] {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background: none;
+}
+
+/* Inputs */
+.port-input {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  width: 100%;
+  outline: none;
+}
+
+.port-input:focus {
+  border-color: var(--accent-blue);
+}
+
+.port-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Delete Buttons */
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background 0.2s;
+}
+
+.btn-icon:hover {
+  color: #da3633;
+  background: rgba(218, 54, 51, 0.1);
+}
+
+/* Sub Items */
+.sub-items-container {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sub-item-row {
+  display: grid;
+  grid-template-columns: 30px 1.5fr 1fr 30px;
+  /* color, name, amount, delete */
+  gap: 10px;
+  align-items: center;
+  padding-left: 10px;
+  position: relative;
+}
+
+.sub-item-row::before {
+  content: "↳";
+  position: absolute;
+  left: -5px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.sub-color-wrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.btn-add-sub {
+  background: none;
+  border: 1px dashed var(--border-color);
+  color: var(--text-muted);
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.btn-add-sub:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: rgba(88, 166, 255, 0.05);
+}
+
+.add-group-btn {
+  background-color: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  color: var(--accent-blue);
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.add-group-btn:hover {
+  background-color: rgba(88, 166, 255, 0.05);
+  border-color: var(--accent-blue);
+}
+
+
+/* Chart Area */
+.portfolio-charts-panel {
+  position: sticky;
+  top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chart-card-wrapper {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.chart-header h3 {
+  font-size: 1rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.badge-total {
+  background: rgba(88, 166, 255, 0.1);
+  color: var(--accent-blue);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.canvas-container-pie {
+  position: relative;
+  height: 360px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.canvas-container-bar {
+  position: relative;
+  height: 360px;
+  width: 100%;
+}
+
+.canvas-container-donut {
+  position: relative;
+  height: 360px;
+  width: 100%;
+}
+
+.chart-info {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  opacity: 0.7;
+}
+
+.empty-chart-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   SAVED PROJECTIONS SYSTEM (TAB 3 & TABLE ACTIONS)
+   ========================================================================== */
+
+/* 1. Save Button in the Projection Table (Tab 2) */
+.action-cell {
+  width: 70px;
+  text-align: center;
+}
+
+.btn-save-scenario {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0 auto;
+}
+
+.btn-save-scenario:hover {
+  background: rgba(88, 166, 255, 0.1);
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  transform: scale(1.05);
+}
+
+.btn-save-scenario.saved {
+  background: var(--accent-green);
+  color: #fff;
+  border-color: var(--accent-green);
+}
+
+/* 2. Saved Projections Page Layout (Tab 3) */
+.saved-grid {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  flex-direction: column;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.saved-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  /* More modern and spacious corners */
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.saved-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-blue);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header Info */
+.saved-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start !important;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.saved-rate {
+  font-size: 2.4rem;
+  /* Yield rate emphasis */
+  font-weight: 800;
+  color: var(--accent-blue);
+  line-height: 1;
+}
+
+.saved-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-weight: 500;
+}
+
+/* Card Content Area */
+.saved-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  flex-grow: 1;
+}
+
+.saved-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.saved-row span:first-child {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.saved-row span:last-child {
+  color: var(--text-main);
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Card Action Buttons */
+.saved-actions {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  /* Detail button is more prominent */
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.btn-saved-action {
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.btn-saved-action:hover {
+  background: var(--bg-input);
+  color: var(--text-main);
+}
+
+.btn-saved-action.primary {
+  background: var(--button-active);
+  color: white;
+  border-color: transparent;
+}
+
+
+button.primary:hover {
+  background: #238636;
+  box-shadow: 0 4px 15px rgba(35, 134, 54, 0.3);
+}
+
+button.delete:hover {
+  border-color: #da3633;
+  color: #da3633;
+  background: rgba(218, 54, 51, 0.08);
+}
+
+
+
+/* Date input style */
+input[type="date"] {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+}
+
+
+
+
+
+/* Save Modal Background */
+#save-modal {
+  display: none;
+  /* Will be set to flex via JS */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Black transparent overlay */
+  backdrop-filter: blur(8px);
+  /* Blur effect */
+  z-index: 3000;
+  /* Should be above everything else */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Content box that makes the modal visible */
+#save-modal .save-modal-content {
+  background-color: var(--bg-card);
+  /* Dark theme background */
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  color: var(--text-main);
+  /* Remove values like margin-top: 10%, flex already centers it */
+}
+
+.modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+/* --- New Modal Content Design --- */
+.save-modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  width: 90%;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.active .save-modal-card {
+  transform: translateY(0);
+}
+
+.modal-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-footer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+.btn-modal-primary,
+.btn-modal-secondary {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-modal-primary {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.btn-modal-secondary {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+.btn-modal-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-modal-secondary:hover {
+  background: var(--border-color);
+}
+
+/* --- "Already Saved" Button State in the Table --- */
+.save-row-btn.saved {
+  background: rgba(50, 212, 138, 0.2) !important;
+  color: var(--accent-green-bright) !important;
+  border: 1px solid var(--accent-green-bright) !important;
+  cursor: default !important;
+  /* Standard arrow instead of pointer hand */
+  pointer-events: none;
+  /* Completely prevents clicking */
+  transform: none !important;
+  /* Cancels the hover effect */
+  box-shadow: none !important;
+}
+
+
+
+/* Button Groups */
+.modal-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-btn-primary,
+.modal-btn-secondary {
+  padding: 0.8rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.modal-btn-primary {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.modal-btn-secondary {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.saved-scenario-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+/* Card Title and Buttons */
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.scenario-title-group h3 {
+  font-size: 1.25rem;
+  color: var(--accent-blue);
+  margin-bottom: 4px;
+}
+
+
+/* Summary Bar (Wide Layout) */
+.scenario-summary-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.5rem 0;
+  border-radius: 12px;
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mini-stat span {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mini-stat strong {
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+/* Progress Status Section */
+.scenario-status-section {
+  padding: 1rem;
+  border-left: 4px solid var(--accent-green-bright);
+  background: rgba(50, 212, 138, 0.05);
+  border-radius: 0 8px 8px 0;
+}
+
+.progress-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.progress-value {
+  color: var(--accent-green-bright);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-left: 10px;
+}
+
+/* Button Styles */
+.scenario-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-action {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.btn-action.view {
+  background: var(--button-active);
+  color: white;
+  border: none;
+}
+
+.btn-action.edit {
+  background: var(--bg-input);
+  color: var(--text-main);
+}
+
+.btn-action.delete {
+  background: rgba(248, 81, 73, 0.1);
+  color: #f85149;
+  border-color: rgba(248, 81, 73, 0.2);
+}
+
+.btn-action:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
+
+
+
+/* Top Row: Title and Date */
+.scenario-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.8rem;
+}
+
+.scenario-title {
+  font-size: 1.5rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.scenario-date {
+  color: var(--text-muted);
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* Bottom Row: Status Message and Buttons */
+.scenario-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.scenario-status-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.status-value {
+  color: var(--accent-green-bright);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+
+
+
+
+
+
+
+
+/* --- SIDEBAR SETTINGS AREA --- */
+
+/* Divider line between tabs and settings */
+.sidebar-divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.sidebar-settings-group {
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.settings-title {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-left: 4px;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.settings-row {
+  display: flex;
+  gap: 10px;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: fit-content;
+}
+
+.setting-item.small {
+  flex: 1;
+  /* Symbol field is narrower */
+}
+
+.setting-item.large {
+  flex: 2;
+  /* Rate field is wider */
+}
+
+.setting-item label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.setting-item input {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  width: 80px;
+  font-family: var(--font-sans);
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.setting-item input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+  width: 90px;
+}
+
+/* To hide input arrows in Chrome/Safari (optional) */
+.setting-item input[type=number]::-webkit-inner-spin-button,
+.setting-item input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+
+
+
+.sidebar-footer-settings {
+  margin-top: auto;
+  /* Pushes all free space upward, pinning settings to the bottom */
+  padding: 1rem 0.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.currency-switch-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* Increased spacing between elements */
+  padding: 8px 0;
+}
+
+/* --- ENLARGED SWITCH --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  /* Width increased */
+  height: 26px;
+  /* Height increased */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-color);
+  transition: .4s;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  /* Inner circle enlarged */
+  width: 18px;
+  /* Inner circle enlarged */
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Active State */
+input:checked+.slider {
+  background-color: var(--accent-blue);
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+  /* Sliding distance adjusted */
+}
+
+/* Active Label Highlight */
+input:not(:checked)~.tl-text {
+  color: var(--text-main);
+  transform: scale(1.1);
+}
+
+input:checked~.target-text {
+  color: var(--accent-blue);
+  transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Settings Group Layout --- */
+.scenario-settings-group {
+  display: flex;
+  align-items: flex-end;
+  /* Aligned to bottom because of labels */
+  gap: 1.25rem;
+}
+
+/* --- Segmented Control Design --- */
+.inflation-control-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-align: center;
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #0d1117;
+  /* Darker inner background */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 3px;
+  height: 36px;
+}
+
+.segment-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.segment-btn:hover {
+  color: var(--text-main);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Active State - Blue Highlight */
+.segment-btn.active {
+  background-color: var(--button-active);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Separator Line */
+.settings-divider {
+  width: 1px;
+  height: 30px;
+  background-color: var(--border-color);
+  margin-bottom: 3px;
+  /* To align with the label */
+}
+
+
+
+
+
+
+
+
+
+
+/* When open: center */
+.dashboard-card.data-card:not(.collapsed) h4.collapsible-header {
+  justify-content: center;
+}
+
+/* The caret/arrow span must be inline-block to be transformable */
+.collapse-indicator {
+  display: inline-block;
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 260ms cubic-bezier(.2, .9, .2, 1);
+  font-size: 0.95rem;
+  margin-left: 0.5rem;
+  order: 2;
+}
+
+
+
+/* card-body initial settings - JS controls height */
+.card-body {
+  overflow: hidden;
+  transition: max-height 400ms cubic-bezier(.2, .9, .2, 1), opacity 240ms ease;
+  opacity: 1;
+  /* display & max-height will be set by JS; only default styles here */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Disable pointer-events when closed (optional) */
+.dashboard-card.data-card.collapsed .card-body {
+  pointer-events: none;
+}
+
+/* Visual improvement: collapsed card slightly rises on hover (optional) */
+.dashboard-card.data-card {
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.dashboard-card.data-card:hover {
+  /* optional, remove if desired */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+
+
+/* 1. Main header settings: gap and space-between cancelled, always centered */
+.dashboard-card.data-card h4.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* The spacer will now handle the pushing */
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Adding an animated, flexible "spring" (spacer) between the text and icon */
+.dashboard-card.data-card h4.collapsible-header::after {
+  content: '';
+  order: 1;
+  /* Placed to the right of the text (default order: 0), to the left of the icon */
+  transition: flex-grow 360ms cubic-bezier(.2, .9, .2, 1);
+}
+
+/* 4. COLLAPSED STATE: Spacer stretches and widens, pushing elements to the corners (space-between animation) */
+.dashboard-card.data-card.collapsed h4.collapsible-header::after {
+  flex-grow: 1;
+}
+
+/* 5. OPEN STATE: Spacer shrinks and disappears, elements gather to the center (center animation) */
+.dashboard-card.data-card:not(.collapsed) h4.collapsible-header::after {
+  flex-grow: 0;
+}
+
+/* Caret rotation in collapsed state + accessible visual (your original code, stays the same) */
+.dashboard-card.data-card.collapsed .collapse-indicator {
+  transform: rotate(-90deg);
+}
+
+/* ... The remaining card-body and hover settings in the CSS can stay the same ... */

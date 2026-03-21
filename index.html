@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bileşik Getiri & Yatırım Simülatörü</title>
+
+
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <script src="assets/libs/chart.umd.min.js"></script>
+  <script src="assets/libs/chartjs-plugin-datalabels.min.js"></script>
+  <script src="assets/libs/chartjs-plugin-annotation.min.js"></script>
+
+
+</head>
+
+<body style="opacity: 0;">
+
+
+
+
+  <!-- SOL TAB BAR -->
+  <aside class="sidebar">
+
+
+    <button class="tab-btn active" data-tab="portfolio">
+      💼 Portföy
+    </button>
+    <button class="tab-btn" data-tab="projection">
+      📈 Yatırım Projeksiyonu
+    </button>
+    <button class="tab-btn" data-tab="saved">
+      💾 Kayıtlı Senaryolar
+    </button>
+
+
+
+
+    <div class="sidebar-footer-settings">
+
+      <h4 class="settings-title">Yeral Ayarlar</h4>
+
+      <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+
+        <div class="setting-item">
+          <label for="settings-local-inflation-rate">Enflasyon (%)</label>
+          <input type="number" id="settings-local-inflation-rate" step="0.01">
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="sidebar-footer-settings" style="margin-top: 0.5rem">
+
+      <h4 class="settings-title">Döviz Ayarları</h4>
+
+      <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+
+        <div class="setting-item">
+          <label for="settings-currency-symbol">Sembol</label>
+          <input type="text" id="settings-currency-symbol" maxlength="3">
+        </div>
+
+        <div class="setting-item">
+          <label for="settings-currency-rate">Kur</label>
+          <input type="number" id="settings-currency-rate" step="0.01">
+        </div>
+
+      </div>
+
+      <div style="display: flex; justify-content: space-around; margin-top: 0.75rem;">
+
+        <div class="setting-item">
+          <label for="settings-currency-increase-rate">Kur Artışı (%)</label>
+          <input type="number" id="settings-currency-increase-rate" step="0.01">
+        </div>
+
+        <div class="setting-item">
+          <label for="settings-currency-inflation-rate">Enflasyon (%)</label>
+          <input type="number" id="settings-currency-inflation-rate" step="0.01">
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+
+  </aside>
+
+
+
+
+
+
+  <main class="main-content">
+
+
+    <div class="tab-content grid container" class="" id="tab-projection">
+      <header>
+        <h1>Yatırım Projeksiyonu</h1>
+        <p>Bileşik getiri ve finansal özgürlük hesaplayıcısı</p>
+      </header>
+
+      <section class="control-panel">
+
+        <div class="input-group-wrapper" style="border-top-right-radius: 24px; border-top-left-radius: 24px;">
+
+          <div class="input-header">
+            <h2>Varlık & Katkı</h3>
+          </div>
+
+
+          <div class="grid-4" style="margin-bottom: 0;">
+
+
+            <div class="input-item">
+              <label>Başlangıç Anaparası (₺)</label>
+              <input type="number" id="initial-principal" placeholder="0">
+            </div>
+
+            <div class="input-item">
+              <label>Düzenli Katkı (₺)</label>
+              <input type="number" id="contribution-amount" placeholder="0">
+            </div>
+
+            <div class="input-item">
+              <label>Katkı Periyodu</label>
+              <select id="contribution-period">
+                <option value="daily">Günlük</option>
+                <option value="weekly">Haftalık</option>
+                <option value="monthly" selected>Aylık</option>
+                <option value="yearly">Yıllık</option>
+              </select>
+            </div>
+
+            <div class="input-item">
+              <label>Getiri Türü</label>
+              <select id="compound-type">
+                <option value="daily">Günlük Bileşik</option>
+                <option value="weekly">Haftalık Bileşik</option>
+                <option value="monthly">Aylık Bileşik</option>
+                <option value="yearly" selected>Yıllık Bileşik</option>
+              </select>
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+
+
+
+
+        <div class="grid-2" style="grid-template-columns: 1.4fr 1fr;">
+
+          <div class="input-group-wrapper" style="border-bottom-left-radius: 24px;">
+
+            <div class="input-header">
+              <h2>Hedef</h3>
+            </div>
+
+            <div style="position: relative;">
+
+              <div class="selector-wrapper">
+                <div class="goal-selector">
+                  <button class="toggle-btn active" data-mode="income" data-group="goal">Getiri</button>
+                  <button class="toggle-btn" data-mode="principal" data-group="goal">Anapara</button>
+                  <button class="toggle-btn" data-mode="time" data-group="goal">Süre</button>
+                </div>
+              </div>
+
+
+              <div id="goal-inputs-income" class="dynamic-inputs active">
+
+                <div class="grid-2">
+                  <div class="input-item">
+                    <label>Kazanç Miktarı (₺)</label>
+                    <input type="number" id="target-income" placeholder="Otomatik (Katkı/Anapara)">
+                  </div>
+                  <div class="input-item">
+                    <label>Kazanç Periyodu</label>
+                    <select id="income-period">
+                      <option value="daily">Günlük</option>
+                      <option value="weekly">Haftalık</option>
+                      <option value="monthly" selected>Aylık</option>
+                      <option value="yearly">Yıllık</option>
+                    </select>
+                  </div>
+                </div>
+                <p class="info-text">Seçilen periyotta, belirtilen getiriye ne zaman ulaşılacağını hesaplar.</p>
+
+              </div>
+
+              <div id="goal-inputs-principal" class="dynamic-inputs">
+                <div class="input-item full-width">
+                  <label>Hedef Anapara (₺)</label>
+                  <input type="number" id="target-principal" placeholder="Otomatik (Anapara x 10)">
+                </div>
+                <p class="info-text">Toplam portföy büyüklüğünün hedefe ne zaman ulaşacağını hesaplar.</p>
+              </div>
+
+              <div id="goal-inputs-time" class="dynamic-inputs">
+                <div class="grid-2">
+                  <div class="input-item">
+                    <label>Hedef Süre</label>
+                    <input type="number" id="target-time-val" placeholder="Otomatik (5)">
+                  </div>
+                  <div class="input-item">
+                    <label>Zaman Birimi</label>
+                    <select id="target-time-unit">
+                      <option value="12" selected>Yıl</option>
+                      <option value="1">Ay</option>
+                    </select>
+                  </div>
+                </div>
+                <p class="info-text">Belirtilen süre sonunda ulaşılacak anapara ve aylık getiri miktarını gösterir.
+                </p>
+              </div>
+
+            </div>
+
+
+            <div style="display: none;">
+              <div class="switch-wrapper">
+                <label class="switch-container">
+                  <span class="switch-label">Ara Hedefler</span>
+                  <input type="checkbox" id="show-subgoals">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+          <div class="input-group-wrapper" style="border-bottom-right-radius: 24px;">
+
+            <div class="input-header">
+              <h2>Enflasyon</h3>
+            </div>
+
+
+            <div class="selector-wrapper">
+              <div class="enf-selector">
+                <button class="toggle-btn active" data-mode="none" data-group="enf">Yok</button>
+                <button class="toggle-btn" data-mode="local" data-group="enf">Yerel Bazlı</button>
+                <button class="toggle-btn" data-mode="currency" data-group="enf">Döviz Bazlı</button>
+              </div>
+            </div>
+
+
+            <div id="enf-inputs-none" class="dynamic-inputs active">
+              <div class="empty-state-text">
+                <p>Nominal getiri hesaplanır.</p>
+                <p style="font-size: 0.8rem; opacity: 0.6;">Alım gücü erimesi hesaba katılmaz.</p>
+              </div>
+            </div>
+
+            <div id="enf-inputs-local" class="dynamic-inputs">
+              <div class="input-item" style="margin: 0 auto; width: 60%;">
+                <label>Yıllık Enflasyon (%)</label>
+                <input type="number" id="inflation-rate" placeholder="%0">
+              </div>
+              <p class="info-text">Reel getiri, yerel enflasyondan arındırılarak hesaplanır.</p>
+            </div>
+
+            <div id="enf-inputs-currency" class="dynamic-inputs">
+              <div class="grid-2">
+                <div class="input-item">
+                  <label>Yıllık Kur Artışı (%)</label>
+                  <input type="number" id="currency-rate" placeholder="%0">
+                </div>
+                <div class="input-item">
+                  <label>Yıllık Döviz Enflasyonu (%)</label>
+                  <input type="number" id="currency-inflation" placeholder="%0">
+                </div>
+              </div>
+              <p class="info-text">Yatırımınızın döviz bazındaki reel getirisini hesaplar.</p>
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+      </section>
+
+
+      <section class="results-section" id="results-section" style="display: none;">
+        <div class="table-container">
+          <table id="results-table">
+            <thead>
+              <tr id="table-header-row"></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+
+
+
+    <div id="detail-modal" class="modal-overlay">
+
+      <div class="modal-content">
+
+        <div class="modal-header" style="justify-content: center; position: relative;">
+          <h2 id="modal-rate-title" style="margin: 0;">%0 Getiri Senaryosu</h2>
+          <button id="close-modal" class="close-btn" style="position: absolute; right: 0.5rem;">&times;</button>
+        </div>
+
+
+
+        <div class="modal-body-dashboard">
+
+
+          <div id="display-summary"></div>
+
+
+
+          <div class="dashboard-main-grid-results">
+
+
+            <!-- SAĞ: Zaman Serileri -->
+            <div class="dashboard-card data-card" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+
+              <h4 style="text-align: center;">Zaman İçinde Değişim</h4>
+
+              <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                  <h4 id="chart-title-growth" class="chart-title">Toplam Varlık (Reel)</h4>
+                  <canvas id="chart-growth"></canvas>
+                </div>
+
+                <div class="canvas-wrap" style="height: 330px;">
+                  <h4 id="chart-title-interest" class="chart-title">Aylık Getiri (Reel)</h4>
+                  <canvas id="chart-interest"></canvas>
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- SOL: Toplam / Donut / Yüzdeler -->
+            <div class="dashboard-card chart-card"
+              style="transform: translateY(-1px); border-top-left-radius: 0; border-top-right-radius: 0;">
+
+              <h4 id="result-title" style="text-align: center;">Portföy Sonucu</h4>
+
+              <div class="horizontal-card-container" style="row-gap: 0.5rem;">
+
+
+
+                <div style="flex: 1 1 0">
+
+                  <div class="canvas-wrap" style="height: 330px; padding: 1.75rem;">
+
+                    <canvas class="donut-chart-left" id="modal-donut-canvas"></canvas>
+
+                  </div>
+
+                </div>
+
+
+
+                <div class="metric-list" style="flex: 1 1 0;">
+
+                  <div>
+                    <div class="summary-top-bar">
+                      <div class="param-item">
+                        <span class="p-label">Toplam Yatırım</span>
+                        <span class="p-val highlight-blue" id="sum-invested">-</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="p-label">Toplam Getiri</span>
+                        <span class="p-val highlight-green" id="sum-interest">-</span>
+                      </div>
+                    </div>
+
+                    <div class="summary-top-bar">
+
+                      <div class="param-item">
+                        <span class="p-label">Efektif Yıllık Getiri (%)</span>
+                        <span class="p-val highlight-blue" id="effective-interest">-</span>
+                      </div>
+
+                      <div class="param-item">
+                        <span class="p-label">Toplam Getiri (%)</span>
+                        <span class="p-val" id="sum-interest-pct">-</span>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div style="margin-top: 1.8rem; align-content: center;">
+                    <h4 id="pasive-title-real" style="text-align: center; margin-bottom: 0.75rem;">Pasif Gelir
+                    </h4>
+
+                    <div class="summary-top-bar">
+                      <div class="param-item">
+                        <span class="p-label">Günlük Getiri</span>
+                        <span class="p-val" id="inc-daily">-</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="p-label">Aylık Getiri</span>
+                        <span class="p-val" id="inc-monthly">-</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="dashboard-main-grid-today">
+
+
+            <!-- Güncel Özet Bilgiler -->
+            <!-- <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+              <h4 style="text-align: center; margin-bottom: 0;">Güncel Özet Bilgiler</h4>
+
+              <div id="display-summary-today"></div>
+
+            </div> -->
+
+            <div style="display: flex; justify-content: center; gap: 1.5rem;">
+
+              <button class="tab-btn2 active" data-tab="level">
+                📈 Beklenen Seviye Projeksiyonu
+              </button>
+              <button class="tab-btn2" data-tab="todaysMoney">
+                💵 Bugünün Parasıyla Projeksiyon
+              </button>
+              <button class="tab-btn2" data-tab="current">
+                📊 Gerçek Seviye Projeksiyonu
+              </button>
+
+            </div>
+
+            <div class="tab-content2 active" id="tab2-level">
+
+              <!-- Beklenen Güncel Seviye -->
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Seviye</h4>
+
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 id="chart-title-growth-today" class="chart-title">Toplam Varlık</h4>
+                    <canvas id="chart-growth-today"></canvas>
+                  </div>
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 id="chart-title-monthly-income-today" class="chart-title">Aylık Getiri</h4>
+                    <canvas id="chart-monthly-income-today"></canvas>
+                  </div>
+
+                </div>
+
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div style="flex: 1 1 0">
+
+                    <div class="canvas-wrap" style="height: 330px; padding: 1.75rem;">
+
+                      <canvas id="modal-donut-canvas-today"></canvas>
+
+                    </div>
+
+                    <div class="summary-top-bar"
+                      style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;"
+                      id="modal-donut-canvas-today-summary">
+                      <div class="param-item">
+                        <span class="p-label">Toplam Yatırım</span>
+                        <span class="p-val highlight-blue" id="sum-invested-today">-</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="p-label">Toplam Getiri</span>
+                        <span class="p-val highlight-green" id="sum-interest-today">-</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="metric-list" id="today-metric-list"
+                    style="display: flex; flex-direction: column; justify-content: space-evenly;">
+
+
+                    <div style="align-content: center;">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;">Yıllık Getiri
+                      </h4>
+
+                      <div class="summary-top-bar" id="yearly-interest-summary-today">
+                        <div class="param-item">
+                          <span class="p-label">Bileşiklendirme Periyodu</span>
+                          <span class="p-val" id="compound-period-today">-</span>
+                        </div>
+                        <div class="param-item">
+                          <span class="p-label" id="title-interest-compounded-today">Efektif Yıllık Getiri</span>
+                          <span class="p-val highlight-blue" id="interest-compounded-today">-</span>
+                        </div>
+                      </div>
+
+                      <div class="summary-top-bar" id="enf-summary-today"
+                        style="border-top-left-radius: 0; border-top-right-radius: 0; margin-top: -1px;">
+                        <div class="param-item">
+                          <span class="p-label">Yıllık Enflasyon</span>
+                          <span class="p-val highlight-red" id="enf-rate-today">-</span>
+                        </div>
+                        <div class="param-item">
+                          <span class="p-label">Gerekli Yıllık Getiri</span>
+                          <span class="p-val highlight-blue" id="target-nominal-income-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div style="align-content: center;">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;">Katkı & Hedef
+                      </h4>
+
+                      <div class="summary-top-bar" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <div class="param-item">
+                          <span class="p-label">Ay Sonuna Gerekli Katkı</span>
+                          <span class="p-val highlight-cyan" id="contrib-today">-</span>
+                        </div>
+                        <div class="param-item" id="item-target-today">
+                          <span class="p-label" id="title-target-today">Reel Getiri Hedefi</span>
+                          <span class="p-val highlight-gold" id="target-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div style="align-content: center;">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;">Süre
+                      </h4>
+
+                      <div class="summary-top-bar">
+                        <div class="param-item">
+                          <span class="p-label">Geçen Süre</span>
+                          <span class="p-val" id="time-passed-today">-</span>
+                        </div>
+                        <div class="param-item">
+                          <span class="p-label">Kalan Süre</span>
+                          <span class="p-val" id="time-left-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Getiri</h4>
+
+                <div class="summary-top-bar" style="grid-template-columns: 1fr 1fr 1fr;"
+                  id="target-income-today-section">
+                  <div class="param-item">
+                    <span class="p-label">Başlangıç Hedefi</span>
+                    <span class="p-val" id="target-start-income-today">-</span>
+                  </div>
+                  <div class="param-item">
+                    <span class="p-label">Güncel Hedef</span>
+                    <span class="p-val highlight-gold" id="target-income-today">-</span>
+                  </div>
+
+                  <div class="param-item">
+                    <span class="p-label">Senaryo Sonu Hedefi</span>
+                    <span class="p-val" id="target-final-income-today">-</span>
+                  </div>
+                </div>
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 id="chart-title-income1-today" class="chart-title">Nominal Periyodik Getiri</h4>
+                    <canvas id="chart-income1-today"></canvas>
+                  </div>
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 id="chart-title-income2-today" class="chart-title">Reel Periyodik Getiri</h4>
+                    <canvas id="chart-income2-today"></canvas>
+                  </div>
+
+                </div>
+
+
+                <div style="margin-top: 0.5rem">
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Nominal Getiri</h4>
+                  <div id="display-summary-income-today"></div>
+                </div>
+
+                <div>
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Reel Getiri</h4>
+                  <div id="display-summary-income-real-today"></div>
+                </div>
+
+              </div>
+
+
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;"
+                id="contrib-section">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Katkı</h4>
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-contrib-today">Aylık Katkı</h4>
+                    <canvas id="chart-contrib-today"></canvas>
+                  </div>
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-period-contrib-today">Periyodik Katkı</h4>
+                    <canvas id="chart-period-contrib-today"></canvas>
+                  </div>
+
+                  <div class="summary-top-bar"
+                    style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                    <div class="param-item">
+                      <span class="p-label">Başlangıç Katkı</span>
+                      <span class="p-val" id="start-contrib-today">-</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="p-label">Güncel Katkı</span>
+                      <span class="p-val highlight-cyan" id="today-contrib-today">-</span>
+                    </div>
+                  </div>
+
+                  <div class="summary-top-bar"
+                    style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                    <div class="param-item">
+                      <span class="p-label">Başlangıç Katkı</span>
+                      <span class="p-val" id="start-period-contrib-today">-</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="p-label">Güncel Katkı</span>
+                      <span class="p-val highlight-cyan" id="today-period-contrib-today">-</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;"
+                id="inflation-section">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Enflasyon</h4>
+
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-enf-total-today">Aylık Enflasyon Birikimi</h4>
+                    <canvas id="chart-enf-total-today"></canvas>
+                  </div>
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-fx-value-today">Aylık Döviz (x) Kuru</h4>
+                    <canvas id="chart-fx-value-today"></canvas>
+                  </div>
+
+                  <div class="summary-top-bar"
+                    style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                    <div class="param-item">
+                      <span class="p-label">Yıllık Enflasyon</span>
+                      <span class="p-val highlight-red" id="yearly-inflation-today">-</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="p-label">Biriken Enflasyon</span>
+                      <span class="p-val highlight-red" id="today-inflation-today">-</span>
+                    </div>
+                  </div>
+
+                  <div class="summary-top-bar"
+                    style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                    <div class="param-item">
+                      <span class="p-label">Başlangıç Kuru</span>
+                      <span class="p-val highlight-purple" id="start-fx-rate-today">-</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="p-label">Güncel Kur</span>
+                      <span class="p-val highlight-purple" id="today-fx-rate-today">-</span>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;"
+                id="target-section">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Hedef</h4>
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-target-today">Hedef</h4>
+                    <canvas id="chart-target-today"></canvas>
+                  </div>
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-target-percent-today">Hedefe Ulaşım</h4>
+                    <canvas id="chart-target-percent-today"></canvas>
+                  </div>
+
+                  <div class="summary-top-bar"
+                    style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                    <div class="param-item">
+                      <span class="p-label">Başlangıç Hedef</span>
+                      <span class="p-val" id="start-target-today">-</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="p-label">Güncel Hedef</span>
+                      <span class="p-val highlight-gold" id="today-target-today">-</span>
+                    </div>
+                  </div>
+
+                  <div class="summary-top-bar"
+                    style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                    <div class="param-item">
+                      <span class="p-label">Güncel Hedefe Ulaşım</span>
+                      <span class="p-val highlight-gold" id="today-target-percent-today">-</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="p-label">Güncel Durum</span>
+                      <span class="p-val" id="today-target-state-today">-</span>
+                      <span class="p-val">/</span>
+                      <span class="p-val highlight-gold" id="today-target-state-target-today">-</span>
+                      <span class="p-val" id="today-target-state-target-end-today">-</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Senaryo Sonucu</h4>
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div style="flex: 1 1 0">
+
+                    <div class="canvas-wrap" style="height: 330px; padding: 1.75rem;">
+
+                      <canvas id="modal-donut-canvas-final-today"></canvas>
+
+                    </div>
+
+                    <div class="summary-top-bar"
+                      style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                      <div class="param-item">
+                        <span class="p-label">Toplam Yatırım</span>
+                        <span class="p-val highlight-blue" id="sum-invested-final-today">-</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="p-label">Toplam Getiri</span>
+                        <span class="p-val highlight-green" id="sum-interest-final-today">-</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+                  <div class="metric-list" id="today-final-metric-list"
+                    style="display: flex; flex-direction: column; justify-content: space-evenly;">
+
+
+                    <div style="align-content: center;" id="final-enf-summary">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;">Enflasyon
+                      </h4>
+
+                      <div class="summary-top-bar" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <div class="param-item">
+                          <span class="p-label">Sonuç Enflasyon</span>
+                          <span class="p-val highlight-red" id="target-final-enf-final-today">-</span>
+                        </div>
+                        <div class="param-item" id="final-rate-item">
+                          <span class="p-label">Sonuç Kur</span>
+                          <span class="p-val highlight-purple" id="target-final-rate-final-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div style="align-content: center;" id="final-target-income-summary">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;" id="title-final-target-income-summary">
+                        Hedef
+                      </h4>
+
+                      <div class="summary-top-bar" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <div class="param-item">
+                          <span class="p-label">Başlangıç Hedefi</span>
+                          <span class="p-val" id="target-start-income-final-today">-</span>
+                        </div>
+                        <div class="param-item">
+                          <span class="p-label">Sonuç Hedef</span>
+                          <span class="p-val highlight-gold" id="target-final-income-final-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div style="align-content: center;">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;">Süre
+                      </h4>
+
+                      <div class="summary-top-bar" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <div class="param-item">
+                          <span class="p-label">Toplam Süre</span>
+                          <span class="p-val" id="time-passed-final-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                </div>
+
+
+
+                <div style="margin-top: 0.5rem">
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Nominal Getiri</h4>
+                  <div id="display-summary-income-final-today"></div>
+                </div>
+
+                <div>
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Reel Getiri</h4>
+                  <div id="display-summary-income-real-final-today"></div>
+                </div>
+
+
+
+
+
+              </div>
+
+            </div>
+
+            <div class="tab-content2" id="tab2-todaysMoney">
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;"
+                id="todays-money-section">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Seviye (Bugünün Parasıyla)</h4>
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title">Toplam Varlık (Reel)</h4>
+                    <canvas id="chart-principal-todays-money-today"></canvas>
+                  </div>
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 id="chart-title-monthly-income-today" class="chart-title">Aylık Getiri (Reel)</h4>
+                    <canvas id="chart-monthly-income-todays-money-today"></canvas>
+                  </div>
+
+                </div>
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div style="flex: 1 1 0" id="modal-donut-canvas-wrapper-todays-money-today">
+
+                    <div class="canvas-wrap" style="height: 330px; padding: 1.75rem;">
+
+                      <canvas id="modal-donut-canvas-todays-money-today"></canvas>
+
+                    </div>
+
+                    <div class="summary-top-bar"
+                      style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;"
+                      id="modal-donut-canvas-todays-money-today-summary">
+                    </div>
+
+                  </div>
+
+                  <div class="metric-list" id="today-todays-money-metric-list"
+                    style="display: flex; flex-direction: column; justify-content: space-evenly;">
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Beklenen Güncel Getiri (Bugünün Parasıyla)</h4>
+
+                <div class="summary-top-bar" style="grid-template-columns: 1fr;"
+                  id="target-income-todays-money-section">
+                  <div class="param-item">
+                    <span class="p-label">Hedef</span>
+                    <span class="p-val highlight-gold" id="target-income-todays-money">-</span>
+                  </div>
+                </div>
+
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-income-todays-money-today">Periyodik Getiri (Nominal)</h4>
+                    <canvas id="chart-income-todays-money-today"></canvas>
+                  </div>
+
+
+                  <div class="canvas-wrap" style="height: 330px; padding-top: 1rem;">
+                    <h4 class="chart-title" id="chart-title-income2-todays-money-today">Periyodik Getiri (Reel)</h4>
+                    <canvas id="chart-income2-todays-money-today"></canvas>
+                  </div>
+
+                </div>
+
+
+                <div style="margin-top: 0.5rem">
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Nominal Getiri</h4>
+                  <div id="display-summary-income-todays-money-today"></div>
+                </div>
+
+                <div>
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Reel Getiri</h4>
+                  <div id="display-summary-income-real-todays-money-today"></div>
+                </div>
+
+              </div>
+
+
+
+              <div class="dashboard-card data-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <h4 style="text-align: center; margin-bottom: 0;">Senaryo Sonucu</h4>
+
+
+                <div class="horizontal-card-container" style="row-gap: 0rem;">
+
+                  <div style="flex: 1 1 0">
+
+                    <div class="canvas-wrap" style="height: 330px; padding: 1.75rem;">
+
+                      <canvas id="modal-donut-canvas-todays-money-final-today"></canvas>
+
+                    </div>
+
+                    <div class="summary-top-bar"
+                      style="grid-template-columns: 1fr 1fr; margin-top: 1rem; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+                      <div class="param-item">
+                        <span class="p-label">Toplam Yatırım</span>
+                        <span class="p-val highlight-blue" id="sum-invested-todays-money-final-today">-</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="p-label">Toplam Getiri</span>
+                        <span class="p-val highlight-green" id="sum-interest-todays-money-final-today">-</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="metric-list" id="today-final-todays-money-metric-list"
+                    style="display: flex; flex-direction: column; justify-content: space-evenly;">
+
+
+                    <div style="align-content: center;" id="final-target-income-todays-money-summary">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;"
+                        id="title-final-target-income-todays-money-summary">Hedef
+                      </h4>
+
+                      <div class="summary-top-bar" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <div class="param-item">
+                          <span class="p-label">Hedef</span>
+                          <span class="p-val highlight-gold" id="target-income-todays-money-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="align-content: center;">
+                      <h4 style="text-align: center; margin-bottom: 0.75rem;">Süre
+                      </h4>
+
+                      <div class="summary-top-bar" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                        <div class="param-item">
+                          <span class="p-label">Toplam Süre</span>
+                          <span class="p-val" id="time-passed-final-todays-money-today">-</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+                <div style="margin-top: 0.5rem">
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Nominal Getiri</h4>
+                  <div id="display-summary-income-todays-money-final-today"></div>
+                </div>
+
+                <div>
+                  <h4 style="text-align: center; margin-bottom: 0.75rem;">Reel Getiri</h4>
+                  <div id="display-summary-income-todays-money-real-final-today"></div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+
+            <div class="tab-content2" id="tab2-current">
+
+
+
+            </div>
+
+
+
+
+
+          </div>
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+    </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="tab-content active" id="tab-portfolio">
+
+
+
+      <div class="container" style="grid-template-rows: 1fr;">
+        <header style="margin-bottom: 2rem;">
+          <h1>Portföy Yönetimi</h1>
+          <p>Varlık dağılımınızı ve alt kırılımlarını görselleştirin.</p>
+        </header>
+
+        <div class="portfolio-layout">
+
+          <div class="portfolio-inputs">
+
+            <div id="asset-list">
+            </div>
+
+            <button id="add-asset-group-btn" class="add-group-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+              </svg>
+              Yeni Varlık Grubu Ekle
+            </button>
+          </div>
+
+          <div class="portfolio-charts-panel">
+
+            <div class="chart-card-wrapper">
+              <div class="chart-header">
+                <h3>Genel Dağılım</h3>
+                <span class="badge-total" id="port-total-value" style="display: none;">₺0</span>
+              </div>
+              <div class="canvas-container-pie">
+                <canvas id="port-pie-chart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card-wrapper" id="stacked-chart-wrapper" style="display:none;">
+              <div class="chart-header">
+                <h3>Detaylı Varlık Analizi</h3>
+              </div>
+              <div class="canvas-container-bar">
+                <canvas id="port-bar-chart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card-wrapper" id="stacked-donut-chart-wrapper" style="display:none;">
+              <div class="chart-header">
+                <h3>Detaylı Varlık Analizi</h3>
+              </div>
+              <div class="canvas-container-donut">
+                <canvas id="port-stacked-donut-chart"></canvas>
+              </div>
+            </div>
+
+            <div id="port-empty-state" class="empty-chart-state">
+              <p>Grafikleri görmek için varlık grubu ekleyin.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="tab-content container" id="tab-saved">
+      <header style="margin-bottom: 2rem;" id="saved-header">
+        <h1>Kayıtlı Senaryolar</h1>
+        <p>Kaydettiğiniz senaryoları burada inceleyin.</p>
+      </header>
+
+      <div id="saved-projections-list" class="saved-grid">
+      </div>
+
+      <div id="saved-empty-state" class="empty-chart-state" style="display: none;">
+        <p>Henüz kayıtlı bir senaryonuz yok.</p>
+      </div>
+    </div>
+
+
+
+  </main>
+
+
+
+  <div id="save-modal" class="modal">
+    <div class="save-modal-content">
+      <div class="modal-header">
+        <h3>Senaryoyu Kaydet</h3>
+        <button class="close-btn" onclick="closeSaveModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem;">
+
+          <div class="input-item">
+            <label>Senaryo Başlığı</label>
+            <input type="text" id="modal-save-title" placeholder="Örn: Erken Emeklilik Hedefi">
+          </div>
+
+
+          <div class="grid-2">
+
+            <div class="input-item">
+              <label>Başlangıç Tarihi</label>
+              <input type="date" id="modal-save-date">
+            </div>
+
+            <div class="input-item">
+              <label id="modal-save-currency-rate-label">Başlangıç Döviz Kuru</label>
+              <input type="number" id="modal-save-currency-rate" step="0.01">
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <div class="modal-actions-row">
+          <button class="modal-btn-secondary delete" onclick="closeSaveModal()">İptal</button>
+          <button class="modal-btn-primary primary" id="confirm-save-btn">💾 Kaydet</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <script src="assets/js/storage.js"></script>
+
+    <script src="assets/js/moneyHelper.js"></script>
+    <script src="assets/js/settings.js"></script>
+
+    <script src="assets/js/summaryHelper.js"></script>
+    <script src="assets/js/chartHelper.js"></script>
+
+    <script src="assets/js/simulation.js"></script>
+
+    <script src="assets/js/showDetails.js"></script>
+
+    <script src="assets/js/script.js"></script>
+
+    <script src="assets/js/saveProjection.js"></script>
+
+    <script src="assets/js/portfolio.js"></script>
+
+
+</body>
+
+</html>
