@@ -25,7 +25,7 @@ A clean and modern browser-based investment simulator for calculating compound g
 - Uses **Chart.js** for all chart rendering.
 </br>
 
-# Medias
+# Media
 ![Screenshot 1](Introduction%20Media/Screenshot%201.png)
 ![Screenshot 2](Introduction%20Media/Screenshot%202.png)
 ![Screenshot 3](Introduction%20Media/Screenshot%203.png)
