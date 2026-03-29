@@ -2579,3 +2579,191 @@ input:checked~.target-text {
 }
 
 /* ... The remaining card-body and hover settings in the CSS can stay the same ... */
+
+
+
+
+/* ============================
+   RESPONSIVE — HAMBURGER BUTTON & OVERLAY
+============================ */
+
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 0.875rem;
+  left: 0.875rem;
+  z-index: 1100;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+.hamburger-btn:hover {
+  background: var(--border-color);
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+
+/* ============================
+   RESPONSIVE — 768px (Tablet / Mobile)
+============================ */
+
+@media (max-width: 768px) {
+
+  /* Show hamburger */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* Sidebar becomes off-canvas drawer */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 280px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Main content: reset sidebar offset, reduce padding, top room for hamburger */
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1.25rem;
+    padding-top: 4.5rem;
+  }
+
+  /* Header text */
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  /* 4-col grid → 2-col */
+  .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Goal + Inflation side-by-side section → stack (override inline style) */
+  .control-panel > .grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Portfolio charts panel: no sticky on mobile */
+  .portfolio-charts-panel {
+    position: static;
+  }
+
+  /* Modal: full-width, no margin */
+  .modal-overlay {
+    padding: 0;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    min-height: 100dvh;
+    padding: 1.25rem;
+  }
+
+  /* Modal tab bar: wrap */
+  .modal-tab-bar {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    justify-content: flex-start !important;
+  }
+
+  .tab-btn2 {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  /* Dashboard horizontal containers → single column */
+  .dashboard-card .horizontal-card-container {
+    grid-template-columns: 1fr;
+  }
+
+  /* Summary bars: 4-col → 2-col */
+  .summary-top-bar {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Scenario bottom row: stack */
+  .scenario-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  /* Save modal */
+  #save-modal .save-modal-content {
+    width: 95%;
+    padding: 1.25rem;
+  }
+
+  /* Donut chart left offset compensation */
+  .donut-chart-left {
+    transform: none;
+  }
+}
+
+
+/* ============================
+   RESPONSIVE — 480px (Small phones)
+============================ */
+
+@media (max-width: 480px) {
+
+  .main-content {
+    padding: 0.875rem;
+    padding-top: 4rem;
+  }
+
+  /* 4-col → 1-col */
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* 2-col → 1-col */
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .input-group-wrapper {
+    padding: 1rem;
+  }
+
+  /* Saved scenario actions: stack */
+  .saved-actions {
+    grid-template-columns: 1fr;
+  }
+
+  /* Scenario actions: wrap */
+  .scenario-actions {
+    flex-wrap: wrap;
+  }
+}

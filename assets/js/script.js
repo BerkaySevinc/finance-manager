@@ -33,7 +33,15 @@ const closeModalBtn = document.getElementById('close-modal');
 const saveModal = document.getElementById('save-modal');
 
 
-main.style.marginLeft = document.querySelector('.sidebar').offsetWidth + 'px';
+function updateMainMargin() {
+    if (window.innerWidth > 768) {
+        main.style.marginLeft = document.querySelector('.sidebar').offsetWidth + 'px';
+    } else {
+        main.style.marginLeft = '0';
+    }
+}
+updateMainMargin();
+window.addEventListener('resize', updateMainMargin);
 
 
 document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -959,3 +967,31 @@ document.addEventListener('DOMContentLoaded', () => {
 // TODO: If the exchange rate changes month to month, it should be automatically increased by the configured rate after the saved month
 
 // TODO: Add a button to install the site as a desktop app (PWA)
+
+
+// --- Hamburger Menu (Mobile) ---
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const sidebar = document.querySelector('.sidebar');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+hamburgerBtn.addEventListener('click', openSidebar);
+sidebarOverlay.addEventListener('click', closeSidebar);
+
+// Close sidebar on tab selection (mobile)
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (window.innerWidth <= 768) closeSidebar();
+    });
+});
